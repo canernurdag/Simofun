@@ -11,7 +11,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors
 	public class SlotIndicator : MonoBehaviour, IIndicator
 	{
 		[SerializeField] private SpriteRenderer _indicator;
-		private bool _preventColorChange = false;
+		private bool _preventColorChange = true;
 
 		private void OnEnable()
 		{

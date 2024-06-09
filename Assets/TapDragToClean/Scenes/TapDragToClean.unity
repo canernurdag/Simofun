@@ -415,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19887642, guid: f5441404cf24d4046936379810f6287c, type: 3}
       propertyPath: prewarm
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19887642, guid: f5441404cf24d4046936379810f6287c, type: 3}
       propertyPath: playOnAwake
