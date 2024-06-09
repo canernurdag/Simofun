@@ -1,3 +1,4 @@
+using Simofun.DevCaseStudy.Unity.Assets._Common.Scripts.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToClean.Scripts.Events
 		public static event Action OnInputUp;
 
 		public static event Action<float> OnTextureManipulationRationChanged;
+
+		public static event Action<GameManager.GameStateType> OnCleanGameStateChange;
+		public static event Action OnLevelSucceed;
 
 
 		public static void ExecuteOnCleanerSet(Cleaner cleaner)
@@ -45,6 +49,16 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToClean.Scripts.Events
 		public static void ExecuteOnTextureManipulationRationChanged(float newRatio)
 		{
 			OnTextureManipulationRationChanged?.Invoke(newRatio);
+		}
+
+		public static void ExecuteOnThrowGameStateChange(GameManager.GameStateType gameStateType)
+		{
+			OnCleanGameStateChange?.Invoke(gameStateType);
+		}
+
+		public static void ExecuteOnLevelSucceed()
+		{
+			OnLevelSucceed?.Invoke();
 		}
 	}
 }
