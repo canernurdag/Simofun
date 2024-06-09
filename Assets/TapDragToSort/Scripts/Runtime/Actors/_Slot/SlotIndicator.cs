@@ -1,3 +1,5 @@
+using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Slot.Indicator;
+using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Sortable.Abstract;
 using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Controllers._SlotController;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,23 +8,31 @@ using UnityEngine;
 namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Slot
 {
 	[RequireComponent(typeof(Slot))]
-	public class SlotIndicator : MonoBehaviour
+	public class SlotIndicator : MonoBehaviour, IIndicator
 	{
-		private SlotController _slotController;
 		[SerializeField] private SpriteRenderer _indicator;
+		private bool _preventColorChange = false;
 
-	
+		private void OnEnable()
+		{
+			SortGameplayEvents.OnSelectedSortableSet += SetPreventColorChange;
+		}
+
+		private void OnDisable()
+		{
+			SortGameplayEvents.OnSelectedSortableSet -= SetPreventColorChange;
+		}
+
+
 		private void OnMouseEnter()
 		{
-			if (_slotController.SelectedSortable == null) return;
-
+			if (_preventColorChange) return;
 			SetIndicatorColor(Color.green);
 		}
 
 		private void OnMouseExit()
 		{
-			if (_slotController.SelectedSortable == null) return;
-
+			if (_preventColorChange) return;
 			SetIndicatorColor(Color.white);
 		}
 
@@ -36,9 +46,9 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors
 			_indicator.color = color;
 		}
 
-		public void SetSlotController(SlotController slotController)
+		private  void SetPreventColorChange(Sortable sortable)
 		{
-			_slotController = slotController;
+			_preventColorChange = sortable == null;
 		}
 	}
 }

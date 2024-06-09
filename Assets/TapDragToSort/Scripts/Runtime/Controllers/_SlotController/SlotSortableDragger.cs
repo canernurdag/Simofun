@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Controllers._SlotController
 {
 	
-	[RequireComponent(typeof(SlotController))]
+	[RequireComponent(typeof(IControlSelectedSortable))]
 	public class SlotSortableDragger : MonoBehaviour
 	{
 		#region FIELDS
 		private Camera _mainCamera;
-		private SlotController _slotController;
+		private IControlSelectedSortable _controlSelectedSortable;
 		#endregion
 
 		#region SERIEALIZED_FIELDS
@@ -20,18 +20,18 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 		private void Awake()
 		{
 			_mainCamera = Camera.main;
-			_slotController = GetComponent<SlotController>();
+			_controlSelectedSortable = GetComponent<IControlSelectedSortable>();
 		}
 		private void Update()
 		{
 			if (Input.GetMouseButton(0))
 			{
-				if (_slotController.SelectedSortable != null)
+				if (_controlSelectedSortable.SelectedSortable != null)
 				{
 					var mousePosition = Input.mousePosition;
 					mousePosition.z = _distanceZ;
 					Vector3 targetPos = _mainCamera.ScreenToWorldPoint(mousePosition);
-					_slotController.SelectedSortable.transform.position = targetPos;
+					_controlSelectedSortable.SelectedSortable.transform.position = targetPos;
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Slot.Indicator;
 using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Sortable.Abstract;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,17 +6,17 @@ using UnityEngine;
 
 namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Slot
 {
-	[RequireComponent(typeof(SlotIndicator))]
+	[RequireComponent(typeof(IIndicator))]
 	public class Slot : MonoBehaviour
 	{
 		public SlotGroup SlotGroup { get; private set; }
-		public SlotIndicator SlotIndicator { get; private set; }
+		public IIndicator Indicator { get; private set; }
 		public Sortable Sortable { get; private set; } = null;
 		private Transform _sortableParent;
 
 		private void Awake()
 		{
-			SlotIndicator = GetComponent<SlotIndicator>();
+			Indicator = GetComponent<IIndicator>();
 			SlotGroup = GetComponentInParent<SlotGroup>();
 
 			_sortableParent = transform.GetChild(0);
@@ -39,12 +40,12 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors
 				sortable.SetSlot(this);
 				sortable.transform.SetParent(_sortableParent);
 
-				SlotIndicator?.SetActivenessOfIndicator(false);
+				Indicator?.SetActivenessOfIndicator(false);
 			}
 			else if(sortable == null)
 			{
-				SlotIndicator?.SetActivenessOfIndicator(true);
-				SlotIndicator?.SetIndicatorColor(Color.white);
+				Indicator?.SetActivenessOfIndicator(true);
+				Indicator?.SetIndicatorColor(Color.white);
 			}
 
 		}

@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Controllers._SlotController
 {
-	[RequireComponent(typeof(SlotController))]
+	[RequireComponent(typeof(IControlSelectedSortable))]
 	public class SlotSelector : MonoBehaviour
 	{
 		#region FIELDS
 		private Camera _mainCamera;
-		private SlotController _slotController;
+		private IControlSelectedSortable _controlSelectedSortable;
 		#endregion
 
 		#region SERIEALIZED_FIELDS
@@ -23,7 +23,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 		private void Awake()
 		{
 			_mainCamera = Camera.main;
-			_slotController = GetComponent<SlotController>();
+			_controlSelectedSortable = GetComponent<IControlSelectedSortable>();
 		}
 
 		private void Update()
@@ -32,7 +32,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 			{
 				if(_gameManagerSort.CurrentGameStateType == _Common.Scripts.Managers.GameManager.GameStateType.GameRunning)
 				{
-					if (_slotController.SelectedSortable == null)
+					if (_controlSelectedSortable.SelectedSortable == null)
 					{
 						Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 						RaycastHit raycastHit;
@@ -45,7 +45,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 								var sortable = slot.Sortable;
 								if (sortable)
 								{
-									_slotController.SetSelectedSortable(sortable);
+									SortGameplayEvents.ExecuteOnSelectedSortableSet(sortable);
 								}
 							}
 
@@ -58,7 +58,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 
 			if (Input.GetMouseButtonUp(0))
 			{
-				if (_slotController.SelectedSortable == null) return;
+				if (_controlSelectedSortable.SelectedSortable == null) return;
 
 				Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit raycastHit;
@@ -69,13 +69,13 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 
 					if (slot.Sortable == null)
 					{
-						_slotController.SelectedSortable.Slot.SetSortable(null);
+						_controlSelectedSortable.SelectedSortable.Slot.SetSortable(null);
 
-						slot.SetSortable(_slotController.SelectedSortable);
-						_slotController.SelectedSortable.SetSlot(slot);
+						slot.SetSortable(_controlSelectedSortable.SelectedSortable);
+						_controlSelectedSortable.SelectedSortable.SetSlot(slot);
 
 						//PLACE THE SORTABLE TO SLOT
-						_slotController.SelectedSortable.transform.position = slot.transform.position;
+						_controlSelectedSortable.SelectedSortable.transform.position = slot.transform.position;
 
 						//CHECK THE SLOTGROUP SUCCESS CONDITION
 						bool isSlotGroupSuccesful = slot.SlotGroup.IsSlotGroupSuccessful();
@@ -84,34 +84,30 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 							SortGameplayEvents.ExecuteOnSlotGroupSucceed(slot.SlotGroup);
 						}
 
-
 						//CHECK THE WIN CONDITION
-						bool isWin = _slotController.IsWin();
-						if (isWin)
-						{
-							SortGameplayEvents.ExecuteOnSortGameStateChange(_Common.Scripts.Managers.GameManager.GameStateType.GameFinished);
-							SortGameplayEvents.ExecuteOnLevelSucceed();
-						}
+						SortGameplayEvents.ExecuteOnWinCheck();
+			
+						
 
 					}
 					else if (slot.Sortable != null)
 					{
 						//PLACE THE SORTABLE TO INIT SLIT
-						_slotController.SelectedSortable.transform.position = _slotController.SelectedSortable.Slot.transform.position;
+						_controlSelectedSortable.SelectedSortable.transform.position = _controlSelectedSortable.SelectedSortable.Slot.transform.position;
 					}
 
 				}
 				else
 				{
 					//PLACE THE SORTABLE TO INIT SLIT
-					if (_slotController.SelectedSortable != null)
+					if (_controlSelectedSortable.SelectedSortable != null)
 					{
-						_slotController.SelectedSortable.transform.position = _slotController.SelectedSortable.Slot.transform.position;
+						_controlSelectedSortable.SelectedSortable.transform.position = _controlSelectedSortable.SelectedSortable.Slot.transform.position;
 					}
 
 				}
 
-				_slotController.SetSelectedSortable(null);
+				SortGameplayEvents.ExecuteOnSelectedSortableSet(null);
 			}
 		}
 	}

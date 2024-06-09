@@ -7,33 +7,45 @@ using UnityEngine;
 
 namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Controllers._SlotController
 {
-	public class SlotController : MonoBehaviour
+	public class SlotController : MonoBehaviour, IControlSelectedSortable
 	{
 		[SerializeField] private Transform _slotGroupsParent;
 
 		public List<SlotGroup> SlotGroups { get; private set; } = new();
-		public Sortable SelectedSortable { get; private set; } = null;
+		public Sortable SelectedSortable { get; set; } = null;
 	
 
 		private void Awake()
 		{
 			SlotGroups = _slotGroupsParent.GetComponentsInChildren<SlotGroup>().ToList();
 		}
-		private void Start()
+
+		private void OnEnable()
 		{
-			SlotGroups.ForEach(x =>
-			{
-				x.Slots.ForEach(y => { y.SlotIndicator.SetSlotController(this); });
-			});
+			SortGameplayEvents.OnSelectedSortableSet += SetSelectedSortable;
+			SortGameplayEvents.OnWinCheck += ExecuteWinCheck;
 		}
 
-
-		public void SetSelectedSortable(Sortable sortable)
+		private void OnDisable()
+		{
+			SortGameplayEvents.OnSelectedSortableSet -= SetSelectedSortable;
+			SortGameplayEvents.OnWinCheck -= ExecuteWinCheck;
+		}
+		private void SetSelectedSortable(Sortable sortable)
 		{
 			SelectedSortable = sortable;
 		}
 
-		public bool IsWin()
+		public void ExecuteWinCheck()
+		{
+			bool isWin = IsWin();
+			if (isWin)
+			{
+				SortGameplayEvents.ExecuteOnSortGameStateChange(_Common.Scripts.Managers.GameManager.GameStateType.GameFinished);
+				SortGameplayEvents.ExecuteOnLevelSucceed();
+			}
+		}
+		private bool IsWin()
 		{
 			return SlotGroups.All(x => x.IsSlotGroupSuccessful());
 		}

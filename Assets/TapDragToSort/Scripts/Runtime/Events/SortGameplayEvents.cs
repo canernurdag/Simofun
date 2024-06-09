@@ -21,6 +21,7 @@ namespace Simofun.DevCaseStudy.Unity
 		public static event Action OnLevelSucceed;
 
 		public static event Action<SlotGroup> OnSlotGroupSucceed;
+		public static event Action OnWinCheck;
 
 		public static void ExecuteOnSelectedSortableSet(Sortable sortable)
 		{
@@ -53,6 +54,11 @@ namespace Simofun.DevCaseStudy.Unity
 		public static void ExecuteOnSlotGroupSucceed(SlotGroup slotGroup )
 		{
 			OnSlotGroupSucceed?.Invoke(slotGroup);
+		}
+
+		public static void ExecuteOnWinCheck()
+		{
+			OnWinCheck?.Invoke();
 		}
 	}
 }
