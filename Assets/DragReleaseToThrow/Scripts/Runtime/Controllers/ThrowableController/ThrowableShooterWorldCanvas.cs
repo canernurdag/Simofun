@@ -25,16 +25,16 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.C
 		}
 		private void OnEnable()
 		{
-			GameplayEvents.OnInputDown += SetImagesActive;
-			GameplayEvents.DragVector += SetForceIndicator;
-			GameplayEvents.OnInputUp += SetImagesInactive;
+			ThrowGameplayEvents.OnInputDown += SetImagesActive;
+			ThrowGameplayEvents.DragVector += SetForceIndicator;
+			ThrowGameplayEvents.OnInputUp += SetImagesInactive;
 		}
 
 		private void OnDisable()
 		{
-			GameplayEvents.OnInputDown -= SetImagesActive;
-			GameplayEvents.DragVector -= SetForceIndicator;
-			GameplayEvents.OnInputUp -= SetImagesInactive;
+			ThrowGameplayEvents.OnInputDown -= SetImagesActive;
+			ThrowGameplayEvents.DragVector -= SetForceIndicator;
+			ThrowGameplayEvents.OnInputUp -= SetImagesInactive;
 		}
 
 		private void SetForceIndicator(Vector2 dragVector)

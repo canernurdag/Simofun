@@ -11,12 +11,12 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.C
 
 		private void OnEnable()
 		{
-			GameplayEvents.DragVector += RotateThrowableByInput;
+			ThrowGameplayEvents.DragVector += RotateThrowableByInput;
 		}
 
 		private void OnDisable()
 		{
-			GameplayEvents.DragVector -= RotateThrowableByInput;
+			ThrowGameplayEvents.DragVector -= RotateThrowableByInput;
 		}
 
 		private void RotateThrowableByInput(Vector2 dragVector)

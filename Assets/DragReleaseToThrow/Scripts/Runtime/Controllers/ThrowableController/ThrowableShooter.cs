@@ -23,12 +23,12 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.C
 
 		private void OnEnable()
 		{
-			GameplayEvents.OnInputUp += Shoot;
+			ThrowGameplayEvents.OnInputUp += Shoot;
 		}
 
 		private void OnDisable()
 		{
-			GameplayEvents.OnInputUp -= Shoot;
+			ThrowGameplayEvents.OnInputUp -= Shoot;
 		}
 
 		private void Shoot(Vector2 dragVector)

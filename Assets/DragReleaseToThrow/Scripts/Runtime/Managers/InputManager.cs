@@ -19,7 +19,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.M
 				{
 					_isInputExist = true;
 					_firstTouchPosition = Input.mousePosition;
-					GameplayEvents.ExecuteOnInputDown();
+					ThrowGameplayEvents.ExecuteOnInputDown();
 				}
 			}
 			else if (_isInputExist)
@@ -32,13 +32,13 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.M
 					_isInputExist = false;
 					_lastTouchPosition = Input.mousePosition;
 
-					GameplayEvents.ExecuteOnInputUp(dragVector);
+					ThrowGameplayEvents.ExecuteOnInputUp(dragVector);
 				}
 
 				if (Input.GetMouseButton(0))
 				{
 					_lastTouchPosition = Input.mousePosition;
-					GameplayEvents.ExecuteDragInput(dragVector);
+					ThrowGameplayEvents.ExecuteDragInput(dragVector);
 				}
 			}
 

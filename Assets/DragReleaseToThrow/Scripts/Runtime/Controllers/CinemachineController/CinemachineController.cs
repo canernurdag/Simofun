@@ -3,37 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Simofun.DevCaseStudy.Unity
+namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Controllers.CinemachineController
 {
-    public class CinemachineController : MonoBehaviour
-    {
-        [SerializeField] private Animator _stateDrivenAnimator;
+	public class CinemachineController : MonoBehaviour
+	{
+		[SerializeField] private Animator _stateDrivenAnimator;
 
 
 		private void OnEnable()
 		{
-			GameplayEvents.OnInputUp += SetCameraAsResult;
+			ThrowGameplayEvents.OnCameraChangeToResult += SetCameraAsResult;
 		}
 
 		private void OnDisable()
 		{
-			GameplayEvents.OnInputUp -= SetCameraAsResult;
+			ThrowGameplayEvents.OnCameraChangeToResult -= SetCameraAsResult;
 		}
 
-		private void SetCameraAsResult(Vector2 dragVector)
+		private void SetCameraAsResult()
 		{
-			StartCoroutine(SetCameraStateWithDelay(0.8f, "Result"));
+			SetCameraState("Result");
 		}
 
-		private IEnumerator SetCameraStateWithDelay(float delay, string animValue)
-		{
-			yield return new WaitForSeconds(delay);
-			SetCameraState(animValue);
-		}
 
 		private void SetCameraState(string animValue)
-        {
-            _stateDrivenAnimator.SetTrigger(animValue);
-        }
-    }
+		{
+			_stateDrivenAnimator.SetTrigger(animValue);
+		}
+	}
 }
