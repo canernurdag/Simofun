@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Controllers.ThrowableController
 {
-	[RequireComponent(typeof(ThrowableShooter))]
+	[RequireComponent(typeof(IShooter))]
 	public class ThrowableShooterWorldCanvas : MonoBehaviour
 	{
 		[SerializeField] private Image _insideImage;
 		[SerializeField] private Image _outsideImage;
 
-		private ThrowableShooter _throwableShooter;
+		private IShooter _throwableShooter;
 
 		private void Awake()
 		{

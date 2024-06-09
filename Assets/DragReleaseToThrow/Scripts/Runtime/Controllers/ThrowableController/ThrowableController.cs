@@ -4,21 +4,22 @@ using UnityEngine;
 
 namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Controllers.ThrowableController
 {
-	[RequireComponent(typeof(ThrowableSpawner))]
+	[RequireComponent(typeof(ISpawner<Throwable>))]
 	public class ThrowableController : MonoBehaviour
 	{
 		public Throwable ActiveThrowable { get; private set; }
-		private ThrowableSpawner _throwableSpawner;
+		private ISpawner<Throwable> _throwableSpawner;
 
 
 		private void Awake()
 		{
-			_throwableSpawner = GetComponent<ThrowableSpawner>();
+			_throwableSpawner = GetComponent<ISpawner<Throwable>>();
 		}
 
 		private void Start()
 		{
-			_throwableSpawner.Spawn();
+			var throwable = _throwableSpawner.Spawn();
+			SetActiveThrowable(throwable);
 		}
 
 		public void SetActiveThrowable(Throwable throwable)

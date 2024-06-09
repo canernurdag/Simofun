@@ -6,13 +6,13 @@ using UnityEngine;
 namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Controllers.ThrowableController
 {
 	[RequireComponent(typeof(ThrowableController))]
-	public class ThrowableShooter : MonoBehaviour
+	public class ThrowableShooter : MonoBehaviour , IShooter
 	{
 		private ThrowableController _throwableController;
 
 		#region SHOOT SETTINGS
-		[field: SerializeField] public float MaxDragMagnitude;
-		[field: SerializeField] public float ForceMultiplier;
+		[field: SerializeField] public float MaxDragMagnitude { get; set; }
+		[field: SerializeField] public float ForceMultiplier { get; set; }
 		#endregion
 
 
@@ -31,7 +31,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.C
 			ThrowGameplayEvents.OnInputUp -= Shoot;
 		}
 
-		private void Shoot(Vector2 dragVector)
+		public void Shoot(Vector2 dragVector)
 		{
 			if (_throwableController.ActiveThrowable == null) return;
 

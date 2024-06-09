@@ -1452,8 +1452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d665ec954a317fb408eabc235b776b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxDragMagnitude: 150
-  ForceMultiplier: 500
+  <MaxDragMagnitude>k__BackingField: 150
+  <ForceMultiplier>k__BackingField: 500
 --- !u!114 &1220055383
 MonoBehaviour:
   m_ObjectHideFlags: 0
