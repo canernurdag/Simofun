@@ -16,6 +16,7 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 
 		#region SERIEALIZED_FIELDS
 		[SerializeField] private LayerMask _slotLayerMask;
+		[SerializeField] private GameManagerSort _gameManagerSort;
 		#endregion
 
 
@@ -29,28 +30,30 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				if (_slotController.SelectedSortable == null)
+				if(_gameManagerSort.CurrentGameStateType == _Common.Scripts.Managers.GameManager.GameStateType.GameRunning)
 				{
-					Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-					RaycastHit raycastHit;
-
-					if (Physics.Raycast(ray, out raycastHit, 500, _slotLayerMask))
+					if (_slotController.SelectedSortable == null)
 					{
-						Slot slot = raycastHit.collider.GetComponent<Slot>();
-                        if (slot)
-                        {
-							var sortable = slot.Sortable;
-							if (sortable)
+						Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+						RaycastHit raycastHit;
+
+						if (Physics.Raycast(ray, out raycastHit, 500, _slotLayerMask))
+						{
+							Slot slot = raycastHit.collider.GetComponent<Slot>();
+							if (slot)
 							{
-								_slotController.SetSelectedSortable(sortable);
+								var sortable = slot.Sortable;
+								if (sortable)
+								{
+									_slotController.SetSelectedSortable(sortable);
+								}
 							}
+
 						}
-                       
 					}
-				}
+				}		
 			
 			}
-
 
 
 			if (Input.GetMouseButtonUp(0))
@@ -86,11 +89,9 @@ namespace Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Contro
 						bool isWin = _slotController.IsWin();
 						if (isWin)
 						{
+							SortGameplayEvents.ExecuteOnSortGameStateChange(_Common.Scripts.Managers.GameManager.GameStateType.GameFinished);
 							SortGameplayEvents.ExecuteOnLevelSucceed();
 						}
-
-
-
 
 					}
 					else if (slot.Sortable != null)

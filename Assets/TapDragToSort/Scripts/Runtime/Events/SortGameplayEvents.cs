@@ -1,3 +1,4 @@
+using Simofun.DevCaseStudy.Unity.Assets._Common.Scripts.Managers;
 using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Slot;
 using Simofun.DevCaseStudy.Unity.Assets.TapDragToSort.Scripts.Runtime.Actors._Sortable.Abstract;
 using System;
@@ -16,6 +17,7 @@ namespace Simofun.DevCaseStudy.Unity
 		public static event Action<Vector2> OnInputDrag;
 		public static event Action OnInputUp;
 
+		public static event Action<GameManager.GameStateType> OnSortGameStateChange;
 		public static event Action OnLevelSucceed;
 
 		public static event Action<SlotGroup> OnSlotGroupSucceed;
@@ -39,6 +41,10 @@ namespace Simofun.DevCaseStudy.Unity
 			OnInputUp?.Invoke();
 		}
 
+		public static void ExecuteOnSortGameStateChange(GameManager.GameStateType gameStateType)
+		{
+			OnSortGameStateChange?.Invoke(gameStateType);
+		}
 		public static void ExecuteOnLevelSucceed()
 		{
 			OnLevelSucceed?.Invoke();
