@@ -1,4 +1,4 @@
-using Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Managers;
+using Simofun.DevCaseStudy.Unity.Assets._Common.Scripts.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,8 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.E
 		public static event Action<Vector2> OnInputUp;
 		public static event Action OnCameraChangeToResult;
 		public static event Action<GameManager.GameStateType> OnThrowGameStateChange;
+		public static event Action OnLevelSucceed;
+		public static event Action OnLevelFailed;
 		public static void ExecuteOnInputDown()
 		{
 			OnInputDown?.Invoke();
@@ -36,6 +38,16 @@ namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.E
 		public static void ExecuteOnThrowGameStateChange(GameManager.GameStateType gameStateType)
 		{
 			OnThrowGameStateChange?.Invoke(gameStateType);
+		}
+
+		public static void ExecuteOnLevelSucceed()
+		{
+			OnLevelSucceed?.Invoke();
+		}
+
+		public static void ExecuteOnLevelFailed()
+		{
+			OnLevelFailed?.Invoke();
 		}
 	}
 }

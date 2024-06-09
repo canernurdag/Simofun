@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Simofun.DevCaseStudy.Unity.Assets.DragReleaseToThrow.Scripts.Runtime.Managers
+namespace Simofun.DevCaseStudy.Unity.Assets._Common.Scripts.Managers
 {
-	public class GameManager : MonoBehaviour
+	public abstract class GameManager : MonoBehaviour
 	{
 		public GameStateType CurrentGameStateType { get; private set; }
-
+		protected virtual void Start()
+		{
+			SetCurrentGameStateType(GameStateType.GameRunning);
+		}
 		public void SetCurrentGameStateType(GameStateType gameStateType)
 		{
 			CurrentGameStateType = gameStateType;
